@@ -1,0 +1,20 @@
+.movie-card {
+  margin-left: 10px;
+  margin-bottom: 10px;
+  max-width: 300px;
+  width: 300px;
+}
+
+.movie-card.card {
+  height: 250px;
+}
+
+.card-footer-badge {
+  font-size: 1rem;
+}
+
+.outer-card {
+  display: flex;
+  flex-grow: inherit;
+  flex-wrap: wrap;
+}
