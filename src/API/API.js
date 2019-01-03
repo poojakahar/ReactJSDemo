@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let API = (url,type='get',data={},header={}) => {
+let API = (url, type='get', data={}, header={}) => {
   let reqHeader = Object.assign(header,{
     'Accept':'application/json',
     'Content-Type':'application/json',
@@ -9,16 +9,14 @@ let API = (url,type='get',data={},header={}) => {
   });
 
   if(type === 'get') {
-    return axios.get(url, reqHeader).then((response)=>{
+    return axios.get(url, {headers: reqHeader}).then((response)=>{
       return Promise.resolve(response)
-    },(err)=>{
-      return Promise.reject(err)
     }).catch((err)=>{
       return Promise.reject(err)
     })
 
   } else if(type === 'post') {
-    return axios.post(url, data, reqHeader).then((response)=>{
+    return axios.post(url, data, {headers: reqHeader}).then((response)=>{
       return Promise.resolve(response)
     },(err)=>{
       return Promise.reject(err)
@@ -27,9 +25,7 @@ let API = (url,type='get',data={},header={}) => {
     })
 
   } else if(type === 'put') {
-    debugger
-    return axios.put(url, data, reqHeader).then((response)=>{
-      debugger
+    return axios.put(url, data, {headers: reqHeader}).then((response)=>{
       return Promise.resolve(response)
     },(err)=>{
       return Promise.reject(err)
@@ -38,7 +34,7 @@ let API = (url,type='get',data={},header={}) => {
     })
 
   } else if(type === 'delete') {
-    return axios.delete(url, reqHeader).then((response)=>{
+    return axios.delete(url, {headers: reqHeader}).then((response)=>{
       return Promise.resolve(response)
     },(err)=>{
       return Promise.reject(err)

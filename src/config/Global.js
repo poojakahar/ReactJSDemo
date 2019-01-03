@@ -19,6 +19,8 @@ module.exports = {
   CROWN_OF_THORNS: '#6F2232',
   MONARCH: '#950740',
   SHIRAZ: '#C3073F',
+
+  AUTH_TOKEN: "authToken",
 };
 
 

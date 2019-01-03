@@ -13,9 +13,9 @@ class AddMovie extends Component {
     super(props);
 
     this.state = {
-      id: props.movie.id || '',
-      name: props.movie.name || '',
-      description: props.movie.description || '',
+      id: ((props.movie && props.movie.id) || ''),
+      name: ((props.movie && props.movie.name) || ''),
+      description: ((props.movie && props.movie.description) || ''),
       image: ''
     }
   }

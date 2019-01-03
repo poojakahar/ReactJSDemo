@@ -1,7 +1,9 @@
 import React, {Component} from "react";
 import posed from "react-pose";
 import styled from "styled-components";
+import { transform } from "popmotion";
 import Header from '../../common/Header';
+const { pipe, clamp, interpolate, blendColor } = transform;
 
 const Container = styled.div`
   height: 100vh;
@@ -11,29 +13,34 @@ const Container = styled.div`
 `;
 
 const Square = posed.div({
-  idle: { scale: 1 },
-  hovered: { scale: 1.5 }
+  draggable: "x",
+  passive: {
+    y: ["x", v => v * Math.sin(v * 0.01)],
+    backgroundColor: [
+      "x",
+      pipe(
+        interpolate([-200, 200], [0, 1]),
+        clamp(0, 1),
+        blendColor("#FF1C68", "#198FE3")
+      )
+    ]
+  }
 });
 
 const StyledSquare = styled(Square)`
   width: 100px;
   height: 100px;
-  background: red;
 `;
 
-export default class First extends Component {
-  state = { hovering: false };
+export default class Second extends Component {
+  state = { pose: "idle" };
 
   render() {
     return (
       <div>
         <Header title={"Pose Fist Example"} />
         <Container>
-          <StyledSquare
-            pose={this.state.hovering ? "hovered" : "idle"}
-            onMouseEnter={() => this.setState({ hovering: true })}
-            onMouseLeave={() => this.setState({ hovering: false })}
-          />
+          <StyledSquare pose={this.state.pose} />
         </Container>
       </div>
     );

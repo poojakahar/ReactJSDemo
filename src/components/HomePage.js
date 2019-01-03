@@ -10,8 +10,6 @@ import {connect} from 'react-redux';
 import Global from '../config/Global'
 import CustomModal from "./common/CustomModal";
 
-// import Collapsible from 'react-collapsible';
-
 class HomePage extends Component {
   constructor(props) {
     super(props);
@@ -19,26 +17,43 @@ class HomePage extends Component {
     this.state = {
       modalIsOpen: false,
       isOpen: false,
-      msg: '',
+      msg: "",
+      alertColor: "",
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    switch(nextProps.from) {
+  success = (from) => {
+    let alertColor = "success";
+    switch(from) {
       case 'new':
-        this.setState({isOpen: true, msg: 'Added Successfully'});
+        this.setState({isOpen: true, msg: 'Added Successfully', alertColor});
         break;
 
       case 'edit':
-        this.setState({isOpen: true, msg: 'Updated Successfully'});
+        this.setState({isOpen: true, msg: 'Updated Successfully', alertColor});
         break;
 
       case 'delete':
-        this.setState({isOpen: true, msg: 'Deleted Successfully'});
+        this.setState({isOpen: true, msg: 'Deleted Successfully', alertColor});
         break;
 
       default:
-        this.setState({isOpen: false, msg: ''});
+        this.setState({isOpen: false, msg: '', alertColor});
+    }
+  };
+
+  error = (msg) => {
+    let alertColor = "danger";
+    this.setState({isOpen: true, msg, alertColor});
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.status === 200) {
+      if(nextProps.from) {
+        this.success(nextProps.from)
+      }
+    } else {
+      this.error(nextProps.error)
     }
   }
 
@@ -57,12 +72,12 @@ class HomePage extends Component {
   );
 
   render() {
-    const {isOpen, msg} = this.state;
+    const {isOpen, msg, alertColor} = this.state;
     return (
       <div>
         <Header title={"HOME"} />
         <SubHeader title={"List of Movies"} right={this.headerRight()} style={{backgroundColor: Global.YELLOW, marginTop: 80}}/>
-        <Alert color="success" style={{marginLeft: 10, marginRight: 10}} isOpen={isOpen}>
+        <Alert color={alertColor} style={{marginLeft: 10, marginRight: 10}} isOpen={isOpen}>
           {msg}
         </Alert>
 
@@ -80,7 +95,9 @@ class HomePage extends Component {
 
 const mapStateToProps = state => {
   return{
-    from: state.Movies.from
+    from: state.Movies.from,
+    status: state.Movies.status,
+    error: state.Movies.error
   }
 };
 

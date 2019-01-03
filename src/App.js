@@ -12,6 +12,8 @@ import thunk from 'redux-thunk';
 import AppReducer from "./Reducers/index";
 import Slider from "./components/Slider";
 import First from "./components/Animation/ReactPoseEx/First";
+import Second from "./components/Animation/ReactPoseEx/Second";
+import Notification from "./components/Notification";
 
 class App extends Component {
   render() {
@@ -21,10 +23,12 @@ class App extends Component {
           <Provider store={(createStore(AppReducer,applyMiddleware(thunk)))}>
             <Router>
               <Switch>
-                <PublicRoute exact path="/login" component={Login} />
-                <PrivateRoute exact path="/home" component={Home} />
+                <PublicRoute exact path = "/login" component={Login} />
+                <PrivateRoute exact path = "/home" component={Home} />
                 <PrivateRoute exact path = "/slider" component = {Slider} />
                 <PrivateRoute exact path = "/first" component = {First} />
+                <PrivateRoute exact path = "/second" component = {Second} />
+                <PrivateRoute exact path = "/notification" component = {Notification} />
                 <Redirect from='/' to='/login'/>
               </Switch>
             </Router>

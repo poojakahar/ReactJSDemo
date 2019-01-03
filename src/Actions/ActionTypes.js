@@ -7,3 +7,4 @@ export const NEW_MOVIE = "NEW_MOVIE";
 export const EDIT_MOVIE = "EDIT_MOVIE";
 export const REMOVE_MOVIE = "REMOVE_MOVIE";
 export const SEARCH = "SEARCH";
+export const ERROR = "ERROR";

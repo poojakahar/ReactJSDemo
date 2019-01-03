@@ -52,6 +52,14 @@ class Header extends Component {
         route: "/first",
         text: "React Pose First"
       },
+      {
+        route: "/second",
+        text: "React Pose Second"
+      },
+      {
+        route: "/notification",
+        text: "Notification"
+      },
     ];
 
     const menu = (

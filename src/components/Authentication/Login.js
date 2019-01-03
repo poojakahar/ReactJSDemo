@@ -3,11 +3,11 @@ import {
   Button,
   TextField
 } from '@material-ui/core';
-import {UserService} from "../../API/userService";
 import Header from '../common/Header'
 import style from "../../config/style";
 import {authUser} from "../../Actions/UserAction";
 import {connect} from 'react-redux';
+import Global from '../../config/Global';
 
 class Login extends Component {
   constructor(props){
@@ -16,13 +16,11 @@ class Login extends Component {
       username:'',
       password:''
     };
-
-    this.userService = new UserService();
   }
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.status === 200 && nextProps.token) {
-      localStorage.setItem("authToken", nextProps.token);
+      localStorage.setItem(Global.AUTH_TOKEN, nextProps.token);
       this.props.history.push('/home');
     } else {
       return alert("Kindly check your username or password");
