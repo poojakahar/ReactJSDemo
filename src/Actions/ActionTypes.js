@@ -8,3 +8,4 @@ export const EDIT_MOVIE = "EDIT_MOVIE";
 export const REMOVE_MOVIE = "REMOVE_MOVIE";
 export const SEARCH = "SEARCH";
 export const ERROR = "ERROR";
+export const NOT_FOUND = "NOT_FOUND";

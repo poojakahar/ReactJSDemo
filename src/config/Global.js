@@ -21,6 +21,10 @@ module.exports = {
   SHIRAZ: '#C3073F',
 
   AUTH_TOKEN: "authToken",
+
+  NOT_FOUND_CODE: 201,
+  SUCCESS_CODE: 200,
+  ERROR_CODE: 404,
 };
 
 

@@ -1,11 +1,14 @@
-import {EDIT_MOVIE, ERROR, GET_MOVIE, GET_MOVIES, NEW_MOVIE, REMOVE_MOVIE, SEARCH} from "../Actions/ActionTypes";
+import {
+  EDIT_MOVIE, ERROR, GET_MOVIE, GET_MOVIES, NEW_MOVIE, NOT_FOUND, REMOVE_MOVIE,
+  SEARCH
+} from "../Actions/ActionTypes";
 
 let INITIAL_STATE={
   status: 0,
   movies: [],
   movie: {},
   from: 'get',
-  error: '',
+  msg: '',
 };
 
 let MoviesReducer = (state = INITIAL_STATE, action) => {
@@ -63,8 +66,17 @@ let MoviesReducer = (state = INITIAL_STATE, action) => {
       return{
         ...state,
         status: action.status,
-        error: action.error
+        msg: action.error
       };
+
+    case NOT_FOUND:
+      return{
+        ...state,
+        status: action.status,
+        msg: action.payload,
+        movies: [],
+      };
+
 
     default:
       return state

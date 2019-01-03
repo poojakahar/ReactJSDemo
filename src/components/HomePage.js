@@ -22,19 +22,19 @@ class HomePage extends Component {
     }
   }
 
-  success = (from) => {
+  success = (from, callback) => {
     let alertColor = "success";
     switch(from) {
       case 'new':
-        this.setState({isOpen: true, msg: 'Added Successfully', alertColor});
+        this.setState({isOpen: true, msg: 'Added Successfully', alertColor}, () => callback());
         break;
 
       case 'edit':
-        this.setState({isOpen: true, msg: 'Updated Successfully', alertColor});
+        this.setState({isOpen: true, msg: 'Updated Successfully', alertColor}, () => callback());
         break;
 
       case 'delete':
-        this.setState({isOpen: true, msg: 'Deleted Successfully', alertColor});
+        this.setState({isOpen: true, msg: 'Deleted Successfully', alertColor}, () => callback());
         break;
 
       default:
@@ -42,18 +42,39 @@ class HomePage extends Component {
     }
   };
 
-  error = (msg) => {
+  error = (msg, callback) => {
     let alertColor = "danger";
-    this.setState({isOpen: true, msg, alertColor});
+    this.setState({isOpen: true, msg, alertColor}, () => callback());
+  };
+
+  disableAlert = () => {
+    setTimeout(() => {
+      this.setState({isOpen: false});
+    }, 1500);
   };
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.status === 200) {
-      if(nextProps.from) {
-        this.success(nextProps.from)
-      }
-    } else {
-      this.error(nextProps.error)
+    switch(nextProps.status) {
+      case Global.SUCCESS_CODE:
+        if(nextProps.from) {
+          this.success(nextProps.from, () => this.disableAlert())
+        }
+        break;
+
+      case Global.NOT_FOUND_CODE:
+        let alertColor = "success";
+        this.setState({isOpen: true, msg: nextProps.msg, alertColor}, () => {
+          this.disableAlert();
+        });
+        break;
+
+      case Global.ERROR_CODE:
+        this.error(nextProps.msg, () => this.disableAlert());
+        break;
+
+      default:
+        this.error("Error");
+        break;
     }
   }
 
@@ -97,7 +118,7 @@ const mapStateToProps = state => {
   return{
     from: state.Movies.from,
     status: state.Movies.status,
-    error: state.Movies.error
+    msg: state.Movies.msg
   }
 };
 

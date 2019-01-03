@@ -8,13 +8,17 @@ import style from "../../config/style";
 import {authUser} from "../../Actions/UserAction";
 import {connect} from 'react-redux';
 import Global from '../../config/Global';
+import { Alert } from 'reactstrap';
 
 class Login extends Component {
   constructor(props){
     super(props);
     this.state={
       username:'',
-      password:''
+      password:'',
+      isOpen: false,
+      msg: "",
+      alertColor: "",
     };
   }
 
@@ -23,7 +27,8 @@ class Login extends Component {
       localStorage.setItem(Global.AUTH_TOKEN, nextProps.token);
       this.props.history.push('/home');
     } else {
-      return alert("Kindly check your username or password");
+      let alertColor = "danger";
+      this.setState({isOpen: true, msg: nextProps.error, alertColor});
     }
   }
 
@@ -33,11 +38,15 @@ class Login extends Component {
   };
 
   render() {
+    const {isOpen, msg, alertColor} = this.state;
     return (
       <div>
         <div>
           <Header title={"LOGIN"} login style={{position: 'relative'}}/>
-          <div className="container">
+          <div className="container" style={{marginTop: 10}}>
+            <Alert color={alertColor} style={{marginLeft: 10, marginRight: 10}} isOpen={isOpen}>
+              {msg}
+            </Alert>
             <div className="text-container">
               <TextField
                 id="username"
@@ -70,7 +79,8 @@ class Login extends Component {
 const mapStateToProps = state => {
   return{
     status: state.Users.status,
-    token: state.Users.token
+    token: state.Users.token,
+    error: state.Users.error,
   }
 };
 

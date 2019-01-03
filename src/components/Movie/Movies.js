@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {
   TextField
 } from '@material-ui/core';
+import Global from "../../config/Global";
 
 class Movies extends Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class Movies extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.status === 200) {
+    if(nextProps.status === Global.SUCCESS_CODE || nextProps.status === Global.NOT_FOUND_CODE) {
       this.setState({movies: nextProps.movies});
     }
   }
